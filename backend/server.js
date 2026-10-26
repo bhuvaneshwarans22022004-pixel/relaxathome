@@ -23,6 +23,51 @@ app.use((req, res, next) => {
   next();
 });
 
+// Root API Welcome & Status Page (Prevents 404 on base URL)
+app.get("/", (req, res) => {
+  const mongoose = require("mongoose");
+  const isConnected = mongoose.connection.readyState === 1;
+
+  res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RelaxAtHome Backend API</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #091a13; color: #fbf9f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(197,155,39,0.3); border-radius: 18px; padding: 36px; max-width: 600px; width: 100%; box-shadow: 0 10px 40px rgba(0,0,0,0.4); text-align: center; }
+    h1 { font-size: 1.8rem; margin: 0 0 10px; color: #e6c559; }
+    p { color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 24px; }
+    .badge { display: inline-block; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; margin-bottom: 20px; }
+    .badge-success { background: #25D366; color: #091a13; }
+    .badge-warn { background: #f59e0b; color: #091a13; }
+    .endpoints { text-align: left; background: rgba(0,0,0,0.3); border-radius: 10px; padding: 16px 20px; margin-top: 20px; }
+    .endpoints h3 { margin: 0 0 12px; font-size: 0.95rem; color: #e6c559; text-transform: uppercase; letter-spacing: 1px; }
+    .endpoint-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-family: monospace; font-size: 0.88rem; }
+    .endpoint-item a { color: #6ee7b7; text-decoration: none; }
+    .endpoint-item a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🌿 RelaxAtHome API Server</h1>
+    <p>Doorstep Massage & Spa Service Centre Backend is live and running.</p>
+    <div class="badge ${isConnected ? 'badge-success' : 'badge-warn'}">
+      ${isConnected ? '✅ MongoDB Atlas Connected' : '⚠️ Local Storage Fallback (Check IP Whitelist)'}
+    </div>
+    <div class="endpoints">
+      <h3>Active Endpoints</h3>
+      <div class="endpoint-item"><span>API Health:</span> <a href="/api/health" target="_blank">/api/health</a></div>
+      <div class="endpoint-item"><span>Services Catalog:</span> <a href="/api/services" target="_blank">/api/services</a></div>
+      <div class="endpoint-item"><span>Site Config:</span> <a href="/api/config" target="_blank">/api/config</a></div>
+      <div class="endpoint-item"><span>Testimonials:</span> <a href="/api/testimonials" target="_blank">/api/testimonials</a></div>
+    </div>
+  </div>
+</body>
+</html>`);
+});
+
 // 1. Health check & DB Status
 app.get("/api/health", async (req, res) => {
   const mongoose = require("mongoose");
