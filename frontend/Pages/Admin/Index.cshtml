@@ -1,0 +1,797 @@
+@page
+@model RelaxAtHome.Frontend.Pages.Admin.AdminIndexModel
+@{
+    ViewData["Title"] = "Admin Control Panel - RelaxAtHome";
+}
+
+<div class="admin-wrapper py-4" style="background:#f4f6f8; min-height: 90vh;">
+    <div class="container">
+        <!-- Admin Header -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 bg-white p-3 p-md-4 rounded-3 shadow-sm border">
+            <div>
+                <span class="badge bg-primary text-uppercase px-3 py-1 mb-2">Management Portal</span>
+                <h2 class="h3 font-serif fw-bold mb-1 text-dark">
+                    <i class="fa-solid fa-sliders text-primary me-2"></i>Admin Control Panel
+                </h2>
+                <p class="text-muted small mb-0">
+                    Manage doorstep massage cards, prices, contact details, locations, and footer content dynamically.
+                </p>
+            </div>
+            <div class="d-flex gap-2 mt-3 mt-md-0">
+                <a asp-page="/Index" class="btn btn-outline-dark rounded-pill px-3 py-2 fw-bold">
+                    <i class="fa-solid fa-eye me-1"></i> View Live Site
+                </a>
+                <button type="button" class="btn btn-outline-danger rounded-pill px-3 py-2" onclick="resetToDefaults()">
+                    <i class="fa-solid fa-rotate-left me-1"></i> Reset Defaults
+                </button>
+            </div>
+        </div>
+
+        <!-- Notification Toast Box -->
+        <div id="adminAlertBox" class="alert alert-success alert-dismissible fade show d-none mb-4 shadow-sm" role="alert">
+            <span id="adminAlertMsg"><i class="fa-solid fa-check-circle me-2"></i>Settings updated successfully!</span>
+            <button type="button" class="btn-close" onclick="document.getElementById('adminAlertBox').classList.add('d-none')"></button>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-pills mb-4 bg-white p-2 rounded-3 shadow-sm border" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-bold px-4 py-2" id="services-tab" data-bs-toggle="pill" data-bs-target="#tab-services" type="button" role="tab">
+                    <i class="fa-solid fa-id-card me-2"></i>Massage Cards & Pricing (@Model.Services.Count)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold px-4 py-2" id="settings-tab" data-bs-toggle="pill" data-bs-target="#tab-settings" type="button" role="tab">
+                    <i class="fa-solid fa-phone me-2"></i>Phone, Email & Hours
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold px-4 py-2" id="locations-tab" data-bs-toggle="pill" data-bs-target="#tab-locations" type="button" role="tab">
+                    <i class="fa-solid fa-map-location-dot me-2"></i>Service Locations & Zones
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold px-4 py-2" id="footer-tab" data-bs-toggle="pill" data-bs-target="#tab-footer" type="button" role="tab">
+                    <i class="fa-solid fa-paragraph me-2"></i>Footer & Brand Content
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold px-4 py-2" id="bookings-tab" data-bs-toggle="pill" data-bs-target="#tab-bookings" type="button" role="tab">
+                    <i class="fa-solid fa-list-check me-2"></i>Recent Bookings (@Model.Bookings.Count)
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div class="tab-content" id="adminTabsContent">
+            
+            <!-- TAB 1: SERVICE CARDS & PRICING -->
+            <div class="tab-pane fade show active" id="tab-services" role="tabpanel">
+                <div class="card border-0 shadow-sm rounded-3">
+                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+                        <div>
+                            <h5 class="mb-0 fw-bold text-dark">Doorstep Massage Cards & Pricing</h5>
+                            <small class="text-muted">Changes here immediately reflect on the homepage booking cards and modal.</small>
+                        </div>
+                        <button type="button" class="btn btn-primary rounded-pill px-3" onclick="openAddServiceModal()">
+                            <i class="fa-solid fa-plus me-1"></i> Add New Card
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 50px;">Icon</th>
+                                        <th>Service Title & Category</th>
+                                        <th>Durations & Pricing (INR)</th>
+                                        <th>Herbal Oils Used</th>
+                                        <th>Popular?</th>
+                                        <th class="text-end" style="width: 160px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="servicesTableBody">
+                                    @foreach (var s in Model.Services)
+                                    {
+                                        var p60 = s.Durations.FirstOrDefault(d => d.Minutes == 60)?.Price ?? 0;
+                                        var p90 = s.Durations.FirstOrDefault(d => d.Minutes == 90)?.Price ?? 0;
+                                        var p120 = s.Durations.FirstOrDefault(d => d.Minutes == 120)?.Price ?? 0;
+                                        var serviceJson = System.Text.Json.JsonSerializer.Serialize(s);
+
+                                        <tr id="row-service-@s.Id">
+                                            <td>
+                                                <div class="p-2 rounded bg-light text-primary text-center">
+                                                    <i class="@s.Icon fs-5"></i>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="fw-bold text-dark">@s.NameEn</div>
+                                                <div class="small text-muted">@s.NameTa</div>
+                                                <span class="badge bg-light text-secondary border mt-1">@s.CategoryEn</span>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column gap-1 small">
+                                                    <div><strong>60m:</strong> ₹@p60</div>
+                                                    <div><strong>90m:</strong> ₹@p90</div>
+                                                    @if (p120 > 0)
+                                                    {
+                                                        <div><strong>120m:</strong> ₹@p120</div>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <small class="d-block text-truncate" style="max-width: 220px;" title="@s.OilsEn">@s.OilsEn</small>
+                                                <small class="text-muted d-block text-truncate" style="max-width: 220px;" title="@s.OilsTa">@s.OilsTa</small>
+                                            </td>
+                                            <td>
+                                                @if (s.Popular)
+                                                {
+                                                    <span class="badge bg-warning text-dark"><i class="fa-solid fa-star me-1"></i>Popular</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-light text-muted border">Standard</span>
+                                                }
+                                            </td>
+                                            <td class="text-end">
+                                                <button type="button" class="btn btn-sm btn-outline-primary rounded-pill me-1" 
+                                                        onclick='openEditServiceModal(@Html.Raw(serviceJson))'>
+                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill" 
+                                                        onclick='deleteServiceCard("@s.Id", "@Html.Raw(s.NameEn.Replace("\"", "\\\""))")'>
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: PHONE, EMAIL & OPERATING HOURS -->
+            <div class="tab-pane fade" id="tab-settings" role="tabpanel">
+                <div class="card border-0 shadow-sm rounded-3">
+                    <div class="card-header bg-white py-3 border-bottom">
+                        <h5 class="mb-0 fw-bold text-dark">Contact Information & Operating Hours</h5>
+                        <small class="text-muted">Updates the WhatsApp booking number, display phone, email, and working hours.</small>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="siteSettingsForm" onsubmit="saveSiteSettings(event)">
+                            <div class="row g-3">
+                                <!-- WhatsApp Phone (Digits) -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">WhatsApp Number (with Country Code, no + or spaces) *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-brands fa-whatsapp text-success"></i></span>
+                                        <input type="text" class="form-control" id="cfgWhatsAppPhone" value="@Model.Config.WhatsAppPhone" required />
+                                    </div>
+                                    <small class="text-muted">Used for direct WhatsApp deep links (e.g., 919876543210)</small>
+                                </div>
+
+                                <!-- Display Phone -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Display Phone Number (Shown to Customers) *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-phone"></i></span>
+                                        <input type="text" class="form-control" id="cfgPhoneDisplay" value="@Model.Config.PhoneDisplay" required />
+                                    </div>
+                                    <small class="text-muted">Shown in header and footer (e.g., +91 98765 43210)</small>
+                                </div>
+
+                                <!-- Support Email -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Support Email Address *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="cfgSupportEmail" value="@Model.Config.SupportEmail" required />
+                                    </div>
+                                </div>
+
+                                <!-- Company Name (EN) -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Company Name (English) *</label>
+                                    <input type="text" class="form-control" id="cfgCompanyName" value="@Model.Config.CompanyName" required />
+                                </div>
+
+                                <!-- Operating Hours (English) -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Operating Hours (English) *</label>
+                                    <input type="text" class="form-control" id="cfgOperatingHours" value="@Model.Config.OperatingHours" required />
+                                </div>
+
+                                <!-- Operating Hours (Tamil) -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Operating Hours (Tamil) *</label>
+                                    <input type="text" class="form-control" id="cfgOperatingHoursTa" value="@Model.Config.OperatingHoursTa" required />
+                                </div>
+                            </div>
+
+                            <div class="mt-4 pt-3 border-top">
+                                <button type="submit" class="btn btn-success rounded-pill px-4 py-2 fw-bold" id="btnSaveSettings">
+                                    <i class="fa-solid fa-floppy-disk me-1"></i> Save Contact Settings
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: SERVICE LOCATIONS -->
+            <div class="tab-pane fade" id="tab-locations" role="tabpanel">
+                <div class="card border-0 shadow-sm rounded-3">
+                    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0 fw-bold text-dark">Service Cities & Doorstep Zones</h5>
+                            <small class="text-muted">Control the cities and areas serviced by your doorstep massage team.</small>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary rounded-pill" onclick="addNewLocationRow()">
+                            <i class="fa-solid fa-plus me-1"></i> Add City
+                        </button>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="locationsForm" onsubmit="saveLocations(event)">
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Service Cities Banner Text (English)</label>
+                                    <input type="text" class="form-control" id="cfgServiceCities" value="@Model.Config.ServiceCities" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Service Cities Banner Text (Tamil)</label>
+                                    <input type="text" class="form-control" id="cfgServiceCitiesTa" value="@Model.Config.ServiceCitiesTa" required />
+                                </div>
+                            </div>
+
+                            <h6 class="fw-bold mb-3">City & Coverage Zones (Shown in Footer & Coverage List)</h6>
+                            <div id="locationsListContainer">
+                                @for (int i = 0; i < Model.Config.Locations.Count; i++)
+                                {
+                                    var loc = Model.Config.Locations[i];
+                                    <div class="row g-2 mb-2 location-row align-items-center">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control loc-city" value="@loc.City" placeholder="City Name" required />
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input type="text" class="form-control loc-areas" value="@loc.Areas" placeholder="Covered Areas (e.g. Adyar, OMR, Velachery)" required />
+                                        </div>
+                                        <div class="col-md-1 text-end">
+                                            <button type="button" class="btn btn-outline-danger btn-sm rounded-circle" onclick="this.closest('.location-row').remove()">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="mt-4 pt-3 border-top">
+                                <button type="submit" class="btn btn-success rounded-pill px-4 py-2 fw-bold" id="btnSaveLocations">
+                                    <i class="fa-solid fa-floppy-disk me-1"></i> Save Location Zones
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: FOOTER & BRAND CONTENT -->
+            <div class="tab-pane fade" id="tab-footer" role="tabpanel">
+                <div class="card border-0 shadow-sm rounded-3">
+                    <div class="card-header bg-white py-3 border-bottom">
+                        <h5 class="mb-0 fw-bold text-dark">Footer & Brand Content</h5>
+                        <small class="text-muted">Edit the company branding and descriptive footer content shown on the live site.</small>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="footerForm" onsubmit="saveFooterContent(event)">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Company Name (Tamil)</label>
+                                    <input type="text" class="form-control" id="cfgCompanyNameTa" value="@Model.Config.CompanyNameTa" required />
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-bold">Footer About Content (English)</label>
+                                    <textarea class="form-control" id="cfgFooterAboutEn" rows="3" required>@Model.Config.FooterAboutEn</textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-bold">Footer About Content (Tamil)</label>
+                                    <textarea class="form-control" id="cfgFooterAboutTa" rows="3" required>@Model.Config.FooterAboutTa</textarea>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 pt-3 border-top">
+                                <button type="submit" class="btn btn-success rounded-pill px-4 py-2 fw-bold" id="btnSaveFooter">
+                                    <i class="fa-solid fa-floppy-disk me-1"></i> Save Footer Content
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: RECENT BOOKINGS -->
+            <div class="tab-pane fade" id="tab-bookings" role="tabpanel">
+                <div class="card border-0 shadow-sm rounded-3">
+                    <div class="card-header bg-white py-3 border-bottom">
+                        <h5 class="mb-0 fw-bold text-dark">Incoming Doorstep Massage Bookings</h5>
+                        <small class="text-muted">Bookings submitted through the website or WhatsApp dispatcher.</small>
+                    </div>
+                    <div class="card-body p-0">
+                        @if (Model.Bookings.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Booking ID</th>
+                                            <th>Customer</th>
+                                            <th>Service & Duration</th>
+                                            <th>Date & Slot</th>
+                                            <th>Doorstep Address</th>
+                                            <th>Price</th>
+                                            <th>Therapist</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var b in Model.Bookings)
+                                        {
+                                            <tr>
+                                                <td><span class="badge bg-secondary">#@b.BookingId</span></td>
+                                                <td>
+                                                    <div class="fw-bold">@b.CustomerName</div>
+                                                    <div class="small text-muted"><i class="fa-brands fa-whatsapp text-success me-1"></i>@b.CustomerPhone</div>
+                                                </td>
+                                                <td>
+                                                    <div class="fw-bold">@b.ServiceName</div>
+                                                    <small class="text-muted">@b.Duration Minutes</small>
+                                                </td>
+                                                <td>
+                                                    <div>@b.PreferredDate</div>
+                                                    <small class="text-muted">@b.TimeSlot</small>
+                                                </td>
+                                                <td>
+                                                    <div class="small" style="max-width: 250px;">@b.Address</div>
+                                                    @if (!string.IsNullOrEmpty(b.Landmark))
+                                                    {
+                                                        <small class="text-muted d-block">Near: @b.Landmark</small>
+                                                    }
+                                                </td>
+                                                <td><strong class="text-success">₹@b.Price</strong></td>
+                                                <td><small class="badge bg-light text-dark border">@b.TherapistPreference</small></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="p-5 text-center text-muted">
+                                <i class="fa-solid fa-inbox fs-1 mb-2"></i>
+                                <p>No bookings received yet. Bookings submitted via the frontend will appear here.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: ADD / EDIT SERVICE CARD -->
+<div class="modal fade" id="serviceCardModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content rounded-3 shadow">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title font-serif" id="serviceModalTitle">Edit Massage Card</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="serviceCardForm" onsubmit="saveServiceCard(event)">
+                    <input type="hidden" id="editServiceId" />
+
+                    <div class="row g-3">
+                        <!-- Name English -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Massage Name (English) *</label>
+                            <input type="text" class="form-control" id="editNameEn" required />
+                        </div>
+
+                        <!-- Name Tamil -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Massage Name (Tamil) *</label>
+                            <input type="text" class="form-control" id="editNameTa" required />
+                        </div>
+
+                        <!-- Tagline English -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Tagline (English)</label>
+                            <input type="text" class="form-control" id="editTaglineEn" />
+                        </div>
+
+                        <!-- Tagline Tamil -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Tagline (Tamil)</label>
+                            <input type="text" class="form-control" id="editTaglineTa" />
+                        </div>
+
+                        <!-- Category English -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Category (English)</label>
+                            <input type="text" class="form-control" id="editCategoryEn" placeholder="e.g. Pain Relief, Ayurveda" required />
+                        </div>
+
+                        <!-- Category Tamil -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Category (Tamil)</label>
+                            <input type="text" class="form-control" id="editCategoryTa" placeholder="எ.கா. வலி நிவாரணம்" required />
+                        </div>
+
+                        <!-- Description English -->
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Description (English)</label>
+                            <textarea class="form-control" id="editDescEn" rows="2" required></textarea>
+                        </div>
+
+                        <!-- Description Tamil -->
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Description (Tamil)</label>
+                            <textarea class="form-control" id="editDescTa" rows="2" required></textarea>
+                        </div>
+
+                        <!-- Pricing Section Header -->
+                        <div class="col-12">
+                            <hr class="my-2" />
+                            <h6 class="fw-bold text-primary mb-2">Duration Pricing (₹ INR)</h6>
+                        </div>
+
+                        <!-- 60 Min Price -->
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold">60 Min Price (₹) *</label>
+                            <input type="number" class="form-control" id="editPrice60" min="500" max="10000" required />
+                        </div>
+
+                        <!-- 90 Min Price -->
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold">90 Min Price (₹) *</label>
+                            <input type="number" class="form-control" id="editPrice90" min="500" max="15000" required />
+                        </div>
+
+                        <!-- 120 Min Price -->
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold">120 Min Price (₹) *</label>
+                            <input type="number" class="form-control" id="editPrice120" min="500" max="20000" required />
+                        </div>
+
+                        <!-- Oils English -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Herbal Oils Used (English)</label>
+                            <input type="text" class="form-control" id="editOilsEn" />
+                        </div>
+
+                        <!-- Oils Tamil -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Herbal Oils Used (Tamil)</label>
+                            <input type="text" class="form-control" id="editOilsTa" />
+                        </div>
+
+                        <!-- Popular Checkbox & Icon -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">FontAwesome Icon Class</label>
+                            <input type="text" class="form-control" id="editIcon" placeholder="fa-solid fa-spa" />
+                        </div>
+
+                        <div class="col-md-6 d-flex align-items-center mt-4">
+                            <div class="form-check form-switch fs-5">
+                                <input class="form-check-input" type="checkbox" id="editPopular" />
+                                <label class="form-check-label fs-6 fw-bold" for="editPopular">Highlight as "Most Popular"</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer px-0 pb-0 mt-4 border-top">
+                        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4" id="btnSaveService">
+                            <i class="fa-solid fa-check me-1"></i> Save Card
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    const API_URL = '@Model.BackendApiUrl';
+
+    function showAdminAlert(message, isError = false) {
+        const box = document.getElementById('adminAlertBox');
+        const msg = document.getElementById('adminAlertMsg');
+        box.className = `alert alert-${isError ? 'danger' : 'success'} alert-dismissible fade show mb-4 shadow-sm`;
+        msg.innerHTML = `<i class="fa-solid fa-${isError ? 'triangle-exclamation' : 'check-circle'} me-2"></i> ${message}`;
+        box.classList.remove('d-none');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- SERVICE CARDS LOGIC ---
+    let isEditing = false;
+
+    function openAddServiceModal() {
+        isEditing = false;
+        document.getElementById('serviceModalTitle').textContent = 'Add New Massage Card';
+        document.getElementById('editServiceId').value = '';
+        document.getElementById('editNameEn').value = '';
+        document.getElementById('editNameTa').value = '';
+        document.getElementById('editTaglineEn').value = '';
+        document.getElementById('editTaglineTa').value = '';
+        document.getElementById('editCategoryEn').value = 'Wellness';
+        document.getElementById('editCategoryTa').value = 'நல்வாழ்வு';
+        document.getElementById('editDescEn').value = '';
+        document.getElementById('editDescTa').value = '';
+        document.getElementById('editPrice60').value = '1799';
+        document.getElementById('editPrice90').value = '2399';
+        document.getElementById('editPrice120').value = '3099';
+        document.getElementById('editOilsEn').value = 'Pure Cold-Pressed Herbal Oil';
+        document.getElementById('editOilsTa').value = 'இயற்கை மூலிகை எண்ணெய்';
+        document.getElementById('editIcon').value = 'fa-solid fa-spa';
+        document.getElementById('editPopular').checked = false;
+
+        new bootstrap.Modal(document.getElementById('serviceCardModal')).show();
+    }
+
+    function openEditServiceModal(service) {
+        isEditing = true;
+        document.getElementById('serviceModalTitle').textContent = `Edit Card: ${service.name_en}`;
+        document.getElementById('editServiceId').value = service.id;
+        document.getElementById('editNameEn').value = service.name_en || '';
+        document.getElementById('editNameTa').value = service.name_ta || '';
+        document.getElementById('editTaglineEn').value = service.tagline_en || '';
+        document.getElementById('editTaglineTa').value = service.tagline_ta || '';
+        document.getElementById('editCategoryEn').value = service.category_en || '';
+        document.getElementById('editCategoryTa').value = service.category_ta || '';
+        document.getElementById('editDescEn').value = service.description_en || '';
+        document.getElementById('editDescTa').value = service.description_ta || '';
+
+        const d60 = service.durations?.find(d => d.minutes === 60);
+        const d90 = service.durations?.find(d => d.minutes === 90);
+        const d120 = service.durations?.find(d => d.minutes === 120);
+
+        document.getElementById('editPrice60').value = d60 ? d60.price : 1799;
+        document.getElementById('editPrice90').value = d90 ? d90.price : 2399;
+        document.getElementById('editPrice120').value = d120 ? d120.price : 3099;
+
+        document.getElementById('editOilsEn').value = service.oils_en || '';
+        document.getElementById('editOilsTa').value = service.oils_ta || '';
+        document.getElementById('editIcon').value = service.icon || 'fa-solid fa-spa';
+        document.getElementById('editPopular').checked = Boolean(service.popular);
+
+        new bootstrap.Modal(document.getElementById('serviceCardModal')).show();
+    }
+
+    async function saveServiceCard(e) {
+        e.preventDefault();
+        const id = document.getElementById('editServiceId').value;
+        const p60 = Number(document.getElementById('editPrice60').value);
+        const p90 = Number(document.getElementById('editPrice90').value);
+        const p120 = Number(document.getElementById('editPrice120').value);
+
+        const payload = {
+            id: id || undefined,
+            name_en: document.getElementById('editNameEn').value,
+            name_ta: document.getElementById('editNameTa').value,
+            tagline_en: document.getElementById('editTaglineEn').value,
+            tagline_ta: document.getElementById('editTaglineTa').value,
+            category_en: document.getElementById('editCategoryEn').value,
+            category_ta: document.getElementById('editCategoryTa').value,
+            description_en: document.getElementById('editDescEn').value,
+            description_ta: document.getElementById('editDescTa').value,
+            durations: [
+                { minutes: 60, price: p60, originalPrice: Math.round(p60 * 1.25) },
+                { minutes: 90, price: p90, originalPrice: Math.round(p90 * 1.25) },
+                { minutes: 120, price: p120, originalPrice: Math.round(p120 * 1.25) }
+            ],
+            oils_en: document.getElementById('editOilsEn').value,
+            oils_ta: document.getElementById('editOilsTa').value,
+            icon: document.getElementById('editIcon').value || 'fa-solid fa-spa',
+            popular: document.getElementById('editPopular').checked
+        };
+
+        const btn = document.getElementById('btnSaveService');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin me-1"></i> Saving...`;
+
+        try {
+            const url = isEditing ? `${API_URL}/admin/services/${id}` : `${API_URL}/admin/services`;
+            const method = isEditing ? 'PUT' : 'POST';
+
+            const resp = await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (resp.ok) {
+                bootstrap.Modal.getInstance(document.getElementById('serviceCardModal')).hide();
+                showAdminAlert(`Service Card "${payload.name_en}" saved successfully! Reloading...`);
+                setTimeout(() => location.reload(), 900);
+            } else {
+                showAdminAlert('Failed to save service card. Check server.', true);
+            }
+        } catch (err) {
+            showAdminAlert('Error communicating with backend API: ' + err.message, true);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-check me-1"></i> Save Card`;
+        }
+    }
+
+    async function deleteServiceCard(id, name) {
+        if (!confirm(`Are you sure you want to delete "${name}"? This will remove it from the website.`)) {
+            return;
+        }
+
+        try {
+            const resp = await fetch(`${API_URL}/admin/services/${id}`, { method: 'DELETE' });
+            if (resp.ok) {
+                showAdminAlert(`Service "${name}" deleted.`);
+                const row = document.getElementById(`row-service-${id}`);
+                if (row) row.remove();
+            } else {
+                showAdminAlert('Failed to delete service', true);
+            }
+        } catch (err) {
+            showAdminAlert('Error: ' + err.message, true);
+        }
+    }
+
+    // --- SITE & CONTACT SETTINGS LOGIC ---
+    async function saveSiteSettings(e) {
+        e.preventDefault();
+        const payload = {
+            whatsappPhone: document.getElementById('cfgWhatsAppPhone').value.trim(),
+            phoneDisplay: document.getElementById('cfgPhoneDisplay').value.trim(),
+            supportEmail: document.getElementById('cfgSupportEmail').value.trim(),
+            companyName: document.getElementById('cfgCompanyName').value.trim(),
+            operatingHours: document.getElementById('cfgOperatingHours').value.trim(),
+            operatingHoursTa: document.getElementById('cfgOperatingHoursTa').value.trim()
+        };
+
+        const btn = document.getElementById('btnSaveSettings');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin me-1"></i> Saving...`;
+
+        try {
+            const resp = await fetch(`${API_URL}/admin/config`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (resp.ok) {
+                showAdminAlert('Contact info & operating hours saved successfully!');
+            } else {
+                showAdminAlert('Failed to save settings', true);
+            }
+        } catch (err) {
+            showAdminAlert('Error: ' + err.message, true);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-floppy-disk me-1"></i> Save Contact Settings`;
+        }
+    }
+
+    // --- LOCATIONS LOGIC ---
+    function addNewLocationRow() {
+        const container = document.getElementById('locationsListContainer');
+        const div = document.createElement('div');
+        div.className = 'row g-2 mb-2 location-row align-items-center';
+        div.innerHTML = `
+            <div class="col-md-4">
+                <input type="text" class="form-control loc-city" placeholder="City Name" required />
+            </div>
+            <div class="col-md-7">
+                <input type="text" class="form-control loc-areas" placeholder="Covered Areas (e.g. Adyar, OMR)" required />
+            </div>
+            <div class="col-md-1 text-end">
+                <button type="button" class="btn btn-outline-danger btn-sm rounded-circle" onclick="this.closest('.location-row').remove()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        `;
+        container.appendChild(div);
+    }
+
+    async function saveLocations(e) {
+        e.preventDefault();
+        const rows = document.querySelectorAll('.location-row');
+        const locations = [];
+        rows.forEach(r => {
+            const city = r.querySelector('.loc-city').value.trim();
+            const areas = r.querySelector('.loc-areas').value.trim();
+            if (city) {
+                locations.push({ city, areas });
+            }
+        });
+
+        const payload = {
+            serviceCities: document.getElementById('cfgServiceCities').value.trim(),
+            serviceCitiesTa: document.getElementById('cfgServiceCitiesTa').value.trim(),
+            locations: locations
+        };
+
+        const btn = document.getElementById('btnSaveLocations');
+        btn.disabled = true;
+
+        try {
+            const resp = await fetch(`${API_URL}/admin/config`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (resp.ok) {
+                showAdminAlert('Service locations & zones updated live!');
+            } else {
+                showAdminAlert('Failed to save locations', true);
+            }
+        } catch (err) {
+            showAdminAlert('Error: ' + err.message, true);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    // --- FOOTER CONTENT LOGIC ---
+    async function saveFooterContent(e) {
+        e.preventDefault();
+        const payload = {
+            companyNameTa: document.getElementById('cfgCompanyNameTa').value.trim(),
+            footerAboutEn: document.getElementById('cfgFooterAboutEn').value.trim(),
+            footerAboutTa: document.getElementById('cfgFooterAboutTa').value.trim()
+        };
+
+        const btn = document.getElementById('btnSaveFooter');
+        btn.disabled = true;
+
+        try {
+            const resp = await fetch(`${API_URL}/admin/config`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (resp.ok) {
+                showAdminAlert('Footer content & branding updated live!');
+            } else {
+                showAdminAlert('Failed to save footer content', true);
+            }
+        } catch (err) {
+            showAdminAlert('Error: ' + err.message, true);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    // --- RESET DEFAULTS ---
+    async function resetToDefaults() {
+        if (!confirm('Are you sure you want to reset all service cards, prices, and settings to original defaults?')) {
+            return;
+        }
+
+        try {
+            const resp = await fetch(`${API_URL}/admin/reset`, { method: 'POST' });
+            if (resp.ok) {
+                showAdminAlert('Restored default services and settings. Reloading...');
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                showAdminAlert('Reset failed', true);
+            }
+        } catch (err) {
+            showAdminAlert('Error: ' + err.message, true);
+        }
+    }
+</script>
+}

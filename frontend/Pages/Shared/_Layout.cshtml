@@ -1,0 +1,250 @@
+@using RelaxAtHome.Frontend.Models
+@{
+    var config = (Model as dynamic)?.Config as SiteConfig ?? new SiteConfig();
+    var whatsappPhone = config.WhatsAppPhone ?? "919876543210";
+    var phoneDisplay = config.PhoneDisplay ?? "+91 98765 43210";
+    var operatingHours = config.OperatingHours ?? "8:00 AM - 10:00 PM (All 7 Days)";
+    var operatingHoursTa = config.OperatingHoursTa ?? "காலை 8:00 - இரவு 10:00 (7 நாட்களும்)";
+    var serviceCities = config.ServiceCities ?? "Chennai, Coimbatore, Madurai, Trichy, Bangalore";
+    var serviceCitiesTa = config.ServiceCitiesTa ?? "சென்னை, கோயம்புத்தூர், மதுரை, திருச்சி, பெங்களூர்";
+    var footerAboutEn = config.FooterAboutEn ?? "South India's most trusted certified doorstep massage service centre. We bring 5-star spa relaxation, sanitized portable beds, and herbal aromatherapy right to your living room or hotel room.";
+    var footerAboutTa = config.FooterAboutTa ?? "தென்னிந்தியாவின் நம்பகமான இல்ல மசாஜ் சேவை மையம். 5-நட்சத்திர ஸ்பா வசதிகள், சுத்திகரிக்கப்பட்ட மசாஜ் படுக்கை மற்றும் இயற்கை எண்ணெய்களுடன் உங்கள் இல்லத்திற்கே வருகிறோம்.";
+    var supportEmail = config.SupportEmail ?? "booking@relaxathome.in";
+    var locations = config.Locations ?? new List<LocationItem>();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RelaxAtHome - Luxury Doorstep Massage Service Centre | ரிலாக்ஸ் அட் ஹோம் இல்ல மசாஜ்</title>
+    <meta name="description" content="Certified luxury door-step massage services at your home or hotel. Professional therapists, portable sanitized spa beds, and organic oils. Instant WhatsApp booking in English & Tamil." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Mukta+Malar:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    
+    <!-- Custom Luxury Wellness CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Top Announcement Bar (Dynamic) -->
+    <div class="top-notice-bar text-center">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <span data-en="✨ Luxury Doorstep Massage at your Home / Hotel • Operating @operatingHours" 
+                  data-ta="✨ உங்கள் இல்லத்திற்கே வரும் சொகுசு மசாஜ் சேவை • இயங்கும் நேரம்: @operatingHoursTa">
+                ✨ Luxury Doorstep Massage at your Home / Hotel • Operating @operatingHours
+            </span>
+            <div class="d-none d-md-flex align-items-center gap-3">
+                <span>
+                    <i class="fa-solid fa-phone me-1 text-warning"></i> @phoneDisplay
+                </span>
+                <span class="text-white-50">|</span>
+                <span data-en="📍 @serviceCities" data-ta="📍 @serviceCitiesTa">
+                    📍 @serviceCities
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Luxury Header & Navigation -->
+    <header>
+        <nav class="luxury-navbar">
+            <div class="container d-flex align-items-center justify-content-between">
+                <!-- Brand Logo -->
+                <a class="navbar-brand-logo" asp-page="/Index">
+                    <div class="brand-icon-wrap">
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+                    <div class="brand-name-wrap">
+                        <span class="brand-title" data-en="RelaxAtHome" data-ta="ரிலாக்ஸ் அட் ஹோம்">RelaxAtHome</span>
+                        <span class="brand-subtitle" data-en="Doorstep Massage & Spa" data-ta="இல்ல மசாஜ் & ஸ்பா">Doorstep Massage & Spa</span>
+                    </div>
+                </a>
+
+                <!-- Nav Links -->
+                <ul class="nav-links-wrap d-none d-lg-flex">
+                    <li>
+                        <a href="/#services" class="nav-link-item" data-en="Services" data-ta="சேவைகள்">Services</a>
+                    </li>
+                    <li>
+                        <a href="/#how-it-works" class="nav-link-item" data-en="How It Works" data-ta="எப்படி செயல்படுகிறது">How It Works</a>
+                    </li>
+                    <li>
+                        <a href="/#hygiene" class="nav-link-item" data-en="Hygiene & Safety" data-ta="பாதுகாப்பு & சுகாதாரம்">Hygiene & Safety</a>
+                    </li>
+                    <li>
+                        <a href="/#reviews" class="nav-link-item" data-en="Reviews" data-ta="வாடிக்கையாளர் கருத்து">Reviews</a>
+                    </li>
+                    <li>
+                        <a href="/#faq" class="nav-link-item" data-en="FAQ" data-ta="அடிக்கடி கேட்கப்படும் கேள்விகள்">FAQ</a>
+                    </li>
+                    <li>
+                        <a asp-page="/Admin/Index" class="nav-link-item text-primary fw-bold" title="Admin Management Panel">
+                            <i class="fa-solid fa-sliders me-1"></i>
+                            <span data-en="Admin Panel" data-ta="நிர்வாக குழு">Admin Panel</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Right Actions: Language Switcher & WhatsApp CTA -->
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Bilingual Switcher Pill -->
+                    <div class="lang-switcher-pill" role="group" aria-label="Language selector">
+                        <button type="button" class="lang-btn active" data-lang="en">English</button>
+                        <button type="button" class="lang-btn" data-lang="ta">தமிழ்</button>
+                    </div>
+
+                    <!-- Direct WhatsApp Header CTA -->
+                    <a href="https://wa.me/@whatsappPhone?text=Hello!%20I%20would%20like%20to%20book%20a%20doorstep%20massage" 
+                       target="_blank" 
+                       class="btn-wa-header d-none d-sm-inline-flex"
+                       id="headerWhatsAppBtn">
+                        <i class="fa-brands fa-whatsapp fs-5"></i>
+                        <span data-en="WhatsApp Us" data-ta="வாட்ஸ்அப்">WhatsApp Us</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- Floating WhatsApp Action Widget -->
+    <div class="floating-whatsapp-wrap">
+        <div class="wa-floating-tooltip">
+            <span class="wa-online-dot"></span>
+            <span data-en="Therapists Ready • Chat Now" data-ta="நிபுணர்கள் தயார் • அரட்டை">Therapists Ready • Chat Now</span>
+        </div>
+        <a href="https://wa.me/@whatsappPhone?text=Hello!%20I%20want%20to%20book%20a%20doorstep%20massage" 
+           target="_blank" 
+           class="floating-wa-btn" 
+           id="floatingWhatsAppBtn" 
+           aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Luxury Footer (Dynamic) -->
+    <footer class="luxury-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 footer-brand">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <div class="brand-icon-wrap" style="width:36px; height:36px; font-size:1rem;">
+                            <i class="fa-solid fa-spa"></i>
+                        </div>
+                        <h3 class="mb-0 text-white font-serif" data-en="RelaxAtHome" data-ta="ரிலாக்ஸ் அட் ஹோம்">RelaxAtHome</h3>
+                    </div>
+                    <p data-en="@footerAboutEn" data-ta="@footerAboutTa" id="footerAboutText">
+                        @footerAboutEn
+                    </p>
+                    <div class="d-flex gap-2 mt-3 text-warning">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <small data-en="100% Verified Therapists • Background Checked" data-ta="100% சான்றளிக்கப்பட்ட மற்றும் சரிபார்க்கப்பட்ட நிபுணர்கள்">
+                            100% Verified Therapists • Background Checked
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h5 class="footer-title" data-en="Quick Links" data-ta="இணைப்புகள்">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="/#services" data-en="All Services" data-ta="அனைத்து சேவைகள்">All Services</a></li>
+                        <li><a href="/#how-it-works" data-en="How It Works" data-ta="எப்படி செயல்படுகிறது">How It Works</a></li>
+                        <li><a href="/#hygiene" data-en="Hygiene Standards" data-ta="சுகாதார முறைகள்">Hygiene Standards</a></li>
+                        <li><a href="/#reviews" data-en="Customer Reviews" data-ta="வாடிக்கையாளர் கருத்து">Customer Reviews</a></li>
+                        <li><a href="/#faq" data-en="FAQ & Help" data-ta="உதவி & கேள்விகள்">FAQ & Help</a></li>
+                        <li><a asp-page="/Admin/Index" class="text-warning fw-bold"><i class="fa-solid fa-gear me-1"></i>Admin Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-6">
+                    <h5 class="footer-title" data-en="Service Zones" data-ta="சேவை பகுதிகள்">Service Zones</h5>
+                    <ul class="footer-links" id="footerLocationsList">
+                        @if (locations.Any())
+                        {
+                            foreach (var loc in locations)
+                            {
+                                <li><a href="/#services">@loc.City (@loc.Areas)</a></li>
+                            }
+                        }
+                        else
+                        {
+                            <li><a href="/#services">Chennai (Adyar, OMR, Anna Nagar, Velachery)</a></li>
+                            <li><a href="/#services">Coimbatore (RS Puram, Peelamedu, Gandhipuram)</a></li>
+                            <li><a href="/#services">Madurai (KK Nagar, Anna Nagar, Bypass)</a></li>
+                            <li><a href="/#services">Trichy (Thillai Nagar, Cantonment)</a></li>
+                            <li><a href="/#services">Bangalore (Koramangala, Indiranagar, HSR)</a></li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title" data-en="WhatsApp Hotline" data-ta="வாட்ஸ்அப் உதவி">WhatsApp Hotline</h5>
+                    <div class="footer-contact-item">
+                        <i class="fa-brands fa-whatsapp text-success fs-5"></i>
+                        <span id="footerDisplayPhone">@phoneDisplay</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <span data-en="@operatingHours" data-ta="@operatingHoursTa" id="footerOperatingHours">@operatingHours</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span id="footerSupportEmail">@supportEmail</span>
+                    </div>
+                    <div class="mt-3">
+                        <a href="https://wa.me/@whatsappPhone?text=Hello!%20I%20would%20like%20to%20book%20a%20massage" 
+                           target="_blank" 
+                           class="btn btn-sm btn-success w-100 rounded-pill py-2 fw-bold"
+                           id="footerWhatsAppBtn">
+                            <i class="fa-brands fa-whatsapp me-1"></i>
+                            <span data-en="Direct WhatsApp Booking" data-ta="நேரடி வாட்ஸ்அப் முன்பதிவு">Direct WhatsApp Booking</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>
+                    &copy; 2026 RelaxAtHome Doorstep Massage & Spa. All Rights Reserved.
+                </div>
+                <div class="d-flex gap-3 mt-2 mt-sm-0">
+                    <span data-en="English / தமிழ் Bilingual Platform" data-ta="ஆங்கிலம் / தமிழ் இருமொழி தளம்">English / தமிழ் Bilingual Platform</span>
+                    <span>•</span>
+                    <a asp-page="/Admin/Index" class="text-white-50 text-decoration-none">
+                        <i class="fa-solid fa-lock me-1"></i>Admin Control Panel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- App Configuration passed to JS -->
+    <script>
+        window.RAH_CONFIG = {
+            whatsappPhone: '@whatsappPhone',
+            backendApiUrl: '@((Model as dynamic)?.BackendApiUrl ?? "http://localhost:5000/api")'
+        };
+    </script>
+
+    <!-- Custom Client Logic -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

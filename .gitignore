@@ -1,0 +1,95 @@
+# ====================================================================
+# RelaxAtHome - Root .gitignore (.NET 9 + Node.js)
+# ====================================================================
+
+# --------------------------------------------------
+# Environment & Secrets (Keep .env.example committed)
+# --------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# --------------------------------------------------
+# Node.js / Backend
+# --------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+
+# Runtime data / persistent dev store if desired (uncomment if you want fresh store per checkout)
+# backend/data/store.json
+
+# --------------------------------------------------
+# .NET / C# / ASP.NET Core
+# --------------------------------------------------
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+*.user
+*.userprefs
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+*.DotSettings.user
+*.pidb
+*.booproj
+*.svclog
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/[Dd]ebug/
+[Bb]in/[Rr]elease/
+[Oo]bj/[Dd]ebug/
+[Oo]bj/[Rr]elease/
+
+# ASP.NET Scaffolding & Cache
+Generated Files/
+_ReSharper*/
+*.ReSharper
+*.VisualState.xml
+TestResult*.xml
+[Tt]est[Rr]esult*/
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# --------------------------------------------------
+# OS & System Files
+# --------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# --------------------------------------------------
+# Logs & Temp Files
+# --------------------------------------------------
+*.log
+*.tmp
+*.bak
+scratch/

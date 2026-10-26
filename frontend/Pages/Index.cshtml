@@ -1,0 +1,636 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Doorstep Massage Service Centre | RelaxAtHome";
+}
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <div class="hero-badge">
+                    <i class="fa-solid fa-certificate"></i>
+                    <span data-en="Premier Certified Doorstep Massage Service" 
+                          data-ta="சான்றளிக்கப்பட்ட இல்ல மசாஜ் சேவை மையம்">
+                        Premier Certified Doorstep Massage Service
+                    </span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span data-en="5-Star Luxury Spa Massage," data-ta="5-நட்சத்திர சொகுசு ஸ்பா மசாஜ்,">5-Star Luxury Spa Massage,</span><br />
+                    <span class="hero-highlight" data-en="Delivered to Your Doorstep." data-ta="உங்கள் இல்லத்திற்கே வருகிறது.">Delivered to Your Doorstep.</span>
+                </h1>
+
+                <p class="hero-desc" 
+                   data-en="Experience deep physical healing and ultimate calm without leaving your home. Our certified therapists arrive equipped with a sanitized portable spa bed, fresh linens, and pure organic essential oils."
+                   data-ta="உங்கள் வீட்டை விட்டு வெளியேறாமல் உடலுக்கும் மனதிற்கும் ஆழ்ந்த அமைதி பெறுங்கள். எங்கள் சான்றளிக்கப்பட்ட நிபுணர்கள் சுத்திகரிக்கப்பட்ட மசாஜ் படுக்கை மற்றும் இயற்கை எண்ணெய்களுடன் உங்கள் வாசலில் ஆஜராவர்.">
+                    Experience deep physical healing and ultimate calm without leaving your home. Our certified therapists arrive equipped with a sanitized portable spa bed, fresh linens, and pure organic essential oils.
+                </p>
+
+                <div class="hero-cta-group">
+                    <button type="button" 
+                            class="btn-primary-spa" 
+                            onclick="openBookingModal('deep-tissue', 'Deep Tissue Muscle Relief Massage', 'ஆழ்ந்த தசை வலி நிவாரண மசாஜ்', 1799, 60, '[{&quot;minutes&quot;:60,&quot;price&quot;:1799},{&quot;minutes&quot;:90,&quot;price&quot;:2399},{&quot;minutes&quot;:120,&quot;price&quot;:3099}]')">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span data-en="Book Doorstep Massage" data-ta="இல்ல மசாஜ் முன்பதிவு">Book Doorstep Massage</span>
+                    </button>
+
+                    <a href="https://wa.me/@Model.WhatsAppPhone?text=Hello!%20I%20want%20to%20book%20a%20doorstep%20massage%20service" 
+                       target="_blank" 
+                       class="btn-whatsapp-big">
+                        <i class="fa-brands fa-whatsapp fs-5"></i>
+                        <span data-en="Instant WhatsApp Booking" data-ta="உடனடி வாட்ஸ்அப் முன்பதிவு">Instant WhatsApp Booking</span>
+                    </a>
+                </div>
+
+                <div class="hero-stats-row">
+                    <div class="hero-stat-item">
+                        <div class="stat-icon"><i class="fa-solid fa-star text-warning"></i></div>
+                        <div class="stat-text">
+                            <strong>4.9 / 5.0</strong>
+                            <span data-en="12,500+ Happy Clients" data-ta="12,500+ வாடிக்கையாளர்கள்">12,500+ Happy Clients</span>
+                        </div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="stat-icon"><i class="fa-solid fa-user-shield"></i></div>
+                        <div class="stat-text">
+                            <strong data-en="100% Verified" data-ta="100% சரிபார்க்கப்பட்டது">100% Verified</strong>
+                            <span data-en="Certified Therapists" data-ta="சான்றளிக்கப்பட்ட நிபுணர்கள்">Certified Therapists</span>
+                        </div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="stat-icon"><i class="fa-solid fa-pump-medical"></i></div>
+                        <div class="stat-text">
+                            <strong data-en="Sanitized Setup" data-ta="சுத்திகரிக்கப்பட்ட படுக்கை">Sanitized Setup</strong>
+                            <span data-en="Beds & Fresh Linens" data-ta="புதிய துண்டுகள்">Beds & Fresh Linens</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Visual Showcase Card -->
+            <div class="col-lg-5">
+                <div class="hero-visual-card">
+                    <div class="visual-card-banner">
+                        <span class="visual-banner-badge" data-en="At-Home Sanctuary" data-ta="இல்ல அமைதி">At-Home Sanctuary</span>
+                        <h4 class="mb-1 text-white font-serif" data-en="Therapist At Your Door" data-ta="உங்கள் வாசலில் நிபுணர்">Therapist At Your Door</h4>
+                        <p class="small text-white-50 mb-0" data-en="We bring the complete spa ambience to your living space" data-ta="முழு ஸ்பா வசதியையும் உங்கள் வீட்டிற்கே கொண்டு வருகிறோம்">
+                            We bring the complete spa ambience to your living space
+                        </p>
+                    </div>
+
+                    <div class="doorstep-features-pill-grid">
+                        <div class="doorstep-feature-pill">
+                            <i class="fa-solid fa-bed"></i>
+                            <span data-en="Portable Spa Bed" data-ta="மடக்கும் ஸ்பா படுக்கை">Portable Spa Bed</span>
+                        </div>
+                        <div class="doorstep-feature-pill">
+                            <i class="fa-solid fa-leaf"></i>
+                            <span data-en="Herbal Organic Oils" data-ta="மூலிகை நறுமண எண்ணெய்கள்">Herbal Organic Oils</span>
+                        </div>
+                        <div class="doorstep-feature-pill">
+                            <i class="fa-solid fa-users"></i>
+                            <span data-en="Male & Female Therapists" data-ta="ஆண் / பெண் நிபுணர்கள்">Male & Female Therapists</span>
+                        </div>
+                        <div class="doorstep-feature-pill">
+                            <i class="fa-solid fa-shield-virus"></i>
+                            <span data-en="Hospital Grade Hygiene" data-ta="உயர்தர சுகாதாரம்">Hospital Grade Hygiene</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 p-3 bg-light rounded text-center border">
+                        <small class="text-muted d-block mb-1" data-en="Need assistance right now?" data-ta="உடனடி உதவி தேவையா?">Need assistance right now?</small>
+                        <a href="https://wa.me/@Model.WhatsAppPhone?text=Hello!%20I%20have%20a%20question%20about%20your%20services" 
+                           target="_blank" 
+                           class="text-success fw-bold text-decoration-none">
+                            <i class="fa-brands fa-whatsapp me-1"></i>
+                            <span data-en="Chat directly on WhatsApp (+91 98765 43210)" data-ta="வாட்ஸ்அப்பில் உரையாடவும் (+91 98765 43210)">Chat directly on WhatsApp (+91 98765 43210)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES CATALOG SECTION -->
+<section class="services-section" id="services">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge" data-en="Therapeutic Treatments" data-ta="சிகிச்சை மசாஜ்கள்">Therapeutic Treatments</span>
+            <h2 class="section-title" data-en="Doorstep Massage Services" data-ta="எங்கள் இல்ல மசாஜ் சேவைகள்">Doorstep Massage Services</h2>
+            <p class="section-subtitle" 
+               data-en="Tailored treatments designed for muscular tension relief, stress unwinding, and cellular detoxification in your home."
+               data-ta="தசை வலி நிவாரணம், மன அமைதி மற்றும் உடல் புத்துணர்ச்சிக்காக வடிவமைக்கப்பட்ட சிறப்பு சேவைகள்.">
+                Tailored treatments designed for muscular tension relief, stress unwinding, and cellular detoxification in your home.
+            </p>
+        </div>
+
+        <div class="services-grid">
+            @foreach (var s in Model.Services)
+            {
+                var defaultDuration = s.Durations.FirstOrDefault() ?? new ServiceDuration { Minutes = 60, Price = 1799, OriginalPrice = 2299 };
+                var durationsJson = System.Text.Json.JsonSerializer.Serialize(s.Durations);
+
+                <div class="service-card @(s.Popular ? "popular-service" : "")">
+                    @if (s.Popular)
+                    {
+                        <div class="popular-ribbon" data-en="Most Popular" data-ta="அதிகம் விரும்பப்படுவது">Most Popular</div>
+                    }
+
+                    <div class="service-card-header">
+                        <div class="service-icon-box">
+                            <i class="@s.Icon"></i>
+                        </div>
+                        <div>
+                            <span class="badge bg-light text-success border mb-1" 
+                                  data-en="@s.CategoryEn" 
+                                  data-ta="@s.CategoryTa">@s.CategoryEn</span>
+                            <h3 class="service-title" 
+                                data-en="@s.NameEn" 
+                                data-ta="@s.NameTa">@s.NameEn</h3>
+                        </div>
+                    </div>
+
+                    <div class="service-card-body">
+                        <div class="service-tagline" 
+                             data-en="@s.TaglineEn" 
+                             data-ta="@s.TaglineTa">@s.TaglineEn</div>
+                        <p class="service-desc" 
+                           data-en="@s.DescriptionEn" 
+                           data-ta="@s.DescriptionTa">@s.DescriptionEn</p>
+
+                        <div class="service-meta-info">
+                            <div class="mb-1">
+                                <i class="fa-solid fa-oil-can"></i>
+                                <strong data-en="Oil:" data-ta="எண்ணெய்:">Oil:</strong>
+                                <span data-en="@s.OilsEn" data-ta="@s.OilsTa">@s.OilsEn</span>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-user-nurse"></i>
+                                <strong data-en="Therapist:" data-ta="நிபுணர்:">Therapist:</strong>
+                                <span data-en="Male / Female Available" data-ta="ஆண் / பெண் நிபுணர்கள் உள்ளனர்">Male / Female Available</span>
+                            </div>
+                        </div>
+
+                        <!-- Duration Selector Chips -->
+                        <div class="durations-selector">
+                            @for (int i = 0; i < s.Durations.Count; i++)
+                            {
+                                var d = s.Durations[i];
+                                <div class="duration-chip @(i == 0 ? "selected" : "")" 
+                                     data-minutes="@d.Minutes" 
+                                     data-price="@d.Price">
+                                    <span class="time">@d.Minutes <span data-en="Mins" data-ta="நிமி">Mins</span></span>
+                                    <span class="price">₹@d.Price</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="service-card-footer">
+                        <button type="button" 
+                                class="btn-card-book" 
+                                onclick='openBookingModal("@s.Id", "@Html.Raw(s.NameEn.Replace("\"", "\\\""))", "@Html.Raw(s.NameTa.Replace("\"", "\\\""))", @defaultDuration.Price, @defaultDuration.Minutes, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(durationsJson)))'>
+                            <i class="fa-solid fa-calendar-plus"></i>
+                            <span data-en="Book Doorstep" data-ta="முன்பதிவு">Book Doorstep</span>
+                        </button>
+
+                        <button type="button" 
+                                class="btn-card-wa" 
+                                onclick='openQuickServiceWhatsApp("@Html.Raw(s.NameEn.Replace("\"", "\\\""))", "@Html.Raw(s.NameTa.Replace("\"", "\\\""))")'>
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <span data-en="WhatsApp" data-ta="வாட்ஸ்அப்">WhatsApp</span>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- HOW DOORSTEP MASSAGE WORKS -->
+<section class="how-it-works-section" id="how-it-works">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge" data-en="Simple & Seamless" data-ta="எளிதான முறை">Simple & Seamless</span>
+            <h2 class="section-title" data-en="How Doorstep Massage Works" data-ta="இல்ல மசாஜ் எப்படி செயல்படுகிறது">How Doorstep Massage Works</h2>
+            <p class="section-subtitle" 
+               data-en="Four simple steps to turn your home into a private tranquil sanctuary."
+               data-ta="உங்கள் வீட்டை ஒரு அமைதியான ஸ்பாவாக மாற்ற 4 எளிய வழிகள்.">
+                Four simple steps to turn your home into a private tranquil sanctuary.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4 class="step-title" data-en="Choose Treatment & Slot" data-ta="மசாஜ் & நேரம் தேர்வு">Choose Treatment & Slot</h4>
+                    <p class="step-desc" 
+                       data-en="Select your preferred massage, duration, therapist gender preference, and time slot via website or WhatsApp."
+                       data-ta="உங்களுக்கு பிடித்த மசாஜ், கால அளவு, நிபுணர் விருப்பம் மற்றும் நேரத்தை ஆன்லைன் அல்லது வாட்ஸ்அப்பில் தேர்வு செய்யவும்.">
+                        Select your preferred massage, duration, therapist gender preference, and time slot via website or WhatsApp.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4 class="step-title" data-en="Therapist Arrives At Home" data-ta="நிபுணர் வருகை">Therapist Arrives At Home</h4>
+                    <p class="step-desc" 
+                       data-en="Our verified therapist arrives promptly with a professional foldable massage bed, fresh linens, and organic oils."
+                       data-ta="எங்கள் சான்றளிக்கப்பட்ட நிபுணர் மசாஜ் படுக்கை, புதிய துண்டுகள் மற்றும் நறுமண எண்ணெய்களுடன் உங்கள் வீட்டிற்கு வருவார்.">
+                        Our verified therapist arrives promptly with a professional foldable massage bed, fresh linens, and organic oils.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4 class="step-title" data-en="Quick 5-Min Spa Setup" data-ta="5 நிமிட அமைவு">Quick 5-Min Spa Setup</h4>
+                    <p class="step-desc" 
+                       data-en="The therapist quickly sets up the spa bed in your bedroom or living area with soothing aroma and relaxing background music."
+                       data-ta="உங்கள் அறையிலேயே படுக்கை அமைக்கப்பட்டு, நறுமணம் மற்றும் மென்மையான இசையுடன் ஸ்பா சூழல் உருவாக்கப்படும்.">
+                        The therapist quickly sets up the spa bed in your bedroom or living area with soothing aroma and relaxing background music.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4 class="step-title" data-en="Blissful Relaxation" data-ta="முழுமையான இளைப்பாறல்">Blissful Relaxation</h4>
+                    <p class="step-desc" 
+                       data-en="Enjoy an uncompromising therapeutic session. Once finished, therapist packs everything cleanly. Pay via UPI or cash."
+                       data-ta="அமைதியான மசாஜ் அனுபவத்தை அனுபவியுங்கள். முடிந்ததும் அனைத்தும் சுத்தமாக எடுத்துக்கொள்ளப்படும். UPI அல்லது ரொக்கமாக செலுத்தலாம்.">
+                        Enjoy an uncompromising therapeutic session. Once finished, therapist packs everything cleanly. Pay via UPI or cash.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HYGIENE & SAFETY PROMISE -->
+<section class="hygiene-section" id="hygiene">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <span class="text-warning fw-bold text-uppercase" style="letter-spacing:1.5px;" data-en="Uncompromising Standards" data-ta="உயர்தர பாதுகாப்பு">Uncompromising Standards</span>
+                <h2 class="display-6 fw-bold mt-2 text-white font-serif" 
+                    data-en="Our Doorstep Hygiene & Safety Guarantee" 
+                    data-ta="எங்கள் சுகாதாரம் மற்றும் பாதுகாப்பு உத்தரவாதம்">
+                    Our Doorstep Hygiene & Safety Guarantee
+                </h2>
+                <p class="text-white-50 mt-3" 
+                   data-en="Your privacy, comfort, and well-being are sacred to us. Every therapist is background-verified, medically certified, and adheres to strict clinical hygiene protocols."
+                   data-ta="உங்கள் தனியுரிமை, சௌகரியம் மற்றும் நல்வாழ்வு எங்களுக்கு மிக முக்கியம். ஒவ்வொரு நிபுணரும் பின்னணி சரிபார்க்கப்பட்டவர்கள் மற்றும் கடுமையான சுகாதார முறைகளைப் பின்பற்றுபவர்கள்.">
+                    Your privacy, comfort, and well-being are sacred to us. Every therapist is background-verified, medically certified, and adheres to strict clinical hygiene protocols.
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="hygiene-grid">
+                    <div class="hygiene-item">
+                        <div class="hygiene-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+                        <h4 data-en="Police Verified Therapists" data-ta="சரிபார்க்கப்பட்ட நிபுணர்கள்">Police Verified Therapists</h4>
+                        <p data-en="Certified experts with verified identities and professional spa credentials." data-ta="அடையாள அட்டை மற்றும் சான்றிதழ் கொண்ட தொழில்முறை நிபுணர்கள்.">Certified experts with verified identities.</p>
+                    </div>
+
+                    <div class="hygiene-item">
+                        <div class="hygiene-icon"><i class="fa-solid fa-pump-medical"></i></div>
+                        <h4 data-en="Sanitized Equipment" data-ta="சுத்திகரிக்கப்பட்ட உபகரணங்கள்">Sanitized Equipment</h4>
+                        <p data-en="Spa bed sanitized before & after every visit with medical-grade disinfectant." data-ta="ஒவ்வொரு சேவைக்கு முன்பும் பின்பும் படுக்கை முழுமையாக கிருமி நீக்கம் செய்யப்படுகிறது.">Spa bed sanitized before & after every visit.</p>
+                    </div>
+
+                    <div class="hygiene-item">
+                        <div class="hygiene-icon"><i class="fa-solid fa-hands-bubbles"></i></div>
+                        <h4 data-en="Disposable Linens & Towels" data-ta="ஒருமுறை பயன்படுத்தும் விரிப்புகள்">Disposable Linens & Towels</h4>
+                        <p data-en="Single-use disposable sheets, face cradle covers, and fresh autoclaved towels." data-ta="புதிய ஒருமுறை பயன்படுத்தும் படுக்கை விரிப்புகள் மற்றும் சுத்தமான துண்டுகள்.">Single-use sheets and fresh towels.</p>
+                    </div>
+
+                    <div class="hygiene-item">
+                        <div class="hygiene-icon"><i class="fa-solid fa-bottle-droplet"></i></div>
+                        <h4 data-en="100% Organic Oils" data-ta="இயற்கை மூலிகை எண்ணெய்கள்">100% Organic Oils</h4>
+                        <p data-en="Cold-pressed sesame, almond, and essential oils free of mineral oils or parabens." data-ta="ரசாயனம் இல்லாத தூய மரச்செக்கு மற்றும் மூலிகை எண்ணெய்கள்.">Cold-pressed pure essential oils.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials-section" id="reviews">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge" data-en="Client Experiences" data-ta="வாடிக்கையாளர் கருத்துக்கள்">Client Experiences</span>
+            <h2 class="section-title" data-en="Real Stories From Real Homes" data-ta="வாடிக்கையாளர்களின் உண்மையான அனுபவம்">Real Stories From Real Homes</h2>
+            <p class="section-subtitle" 
+               data-en="Read how customers in Chennai, Coimbatore, and Bangalore experience our doorstep spa services."
+               data-ta="சென்னை, கோவை மற்றும் பெங்களூர் வாடிக்கையாளர்களின் அனுபவங்களை அறிந்து கொள்ளுங்கள்.">
+                Read how customers experience our doorstep spa services.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text" 
+                       data-en="&ldquo;Incredible doorstep service! The therapist brought a comfortable foldable bed, disposable linens, and soothing music. After a long hospital surgery shift, my lower back pain completely vanished.&rdquo;"
+                       data-ta="&ldquo;மிகவும் அருமையான இல்ல சேவை! மசாஜ் படுக்கை, துண்டுகள் அனைத்தையும் அவர்களே கொண்டு வந்தனர். நீண்ட அறுவை சிகிச்சை பணிக்குப் பிறகு முதுகு வலி முற்றிலும் நீங்கியது.&rdquo;">
+                        &ldquo;Incredible doorstep service! The therapist brought a comfortable foldable bed, disposable linens, and soothing music. After a long hospital surgery shift, my lower back pain completely vanished.&rdquo;
+                    </p>
+                    <div class="review-author">
+                        <div class="author-avatar">KS</div>
+                        <div class="author-info">
+                            <strong>Dr. K. Senthil Nathan</strong>
+                            <span>Chennai (Adyar) • Deep Tissue</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text" 
+                       data-en="&ldquo;I was hesitant about home massage at first, but the female therapist was certified, extremely polite, and maintained complete privacy. The Ayurvedic Abhyanga was deeply therapeutic.&rdquo;"
+                       data-ta="&ldquo;முதலில் சற்று தயங்கினேன், ஆனால் வந்த பெண் நிபுணர் மிகவும் கண்ணியமாகவும் தொழில்முறையாகவும் இருந்தார். ஆயுர்வேத அபியங்கம் மிகச் சிறப்பான புத்துணர்வை தந்தது.&rdquo;">
+                        &ldquo;I was hesitant about home massage at first, but the female therapist was certified, extremely polite, and maintained complete privacy. The Ayurvedic Abhyanga was deeply therapeutic.&rdquo;
+                    </p>
+                    <div class="review-author">
+                        <div class="author-avatar">PL</div>
+                        <div class="author-info">
+                            <strong>Priya Lakshmi R.</strong>
+                            <span>Coimbatore (RS Puram) • Ayurvedic Abhyanga</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text" 
+                       data-en="&ldquo;Booked the Couples Home Spa via WhatsApp on Sunday. Within 45 minutes, two therapists arrived fully equipped. It felt like a luxury resort in our own flat!&rdquo;"
+                       data-ta="&ldquo;ஞாயிற்றுக்கிழமை வாட்ஸ்அப் மூலம் தம்பதியர் ஸ்பா பதிவு செய்தோம். 45 நிமிடங்களில் உபகரணங்களுடன் வந்தனர். எங்கள் வீட்டிலேயே ரிசார்ட் போன்ற உணர்வு!&rdquo;">
+                        &ldquo;Booked the Couples Home Spa via WhatsApp on Sunday. Within 45 minutes, two therapists arrived fully equipped. It felt like a luxury resort in our own flat!&rdquo;
+                    </p>
+                    <div class="review-author">
+                        <div class="author-avatar">AK</div>
+                        <div class="author-info">
+                            <strong>Arun & Meera Kumar</strong>
+                            <span>Chennai (OMR) • Couples Home Spa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section" id="faq">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge" data-en="Got Questions?" data-ta="கேள்விகள் உள்ளதா?">Got Questions?</span>
+            <h2 class="section-title" data-en="Frequently Asked Questions" data-ta="அடிக்கடி கேட்கப்படும் கேள்விகள்">Frequently Asked Questions</h2>
+            <p class="section-subtitle" 
+               data-en="Everything you need to know about preparing for your doorstep massage session."
+               data-ta="உங்கள் இல்ல மசாஜ் முன்பதிவு பற்றிய அனைத்து முக்கிய தகவல்கள்.">
+                Everything you need to know about preparing for your doorstep massage session.
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="accordion faq-accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <span data-en="What equipment does the therapist bring to my home?" data-ta="நிபுணர் என்னென்ன உபகரணங்களை வீட்டிற்கு கொண்டு வருவார்?">
+                                    What equipment does the therapist bring to my home?
+                                </span>
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="faqOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" 
+                                 data-en="Our therapist brings everything required for a complete 5-star spa experience: a sanitized, sturdy portable folding massage table, fresh disposable bedsheets, headrest covers, sanitized soft towels, cold-pressed organic oils, and a portable Bluetooth speaker for calming spa music."
+                                 data-ta="எங்கள் நிபுணர் அனைத்து வசதிகளையும் கொண்டு வருவார்: மருத்துவ தரத்தில் சுத்திகரிக்கப்பட்ட மடக்கும் மசாஜ் படுக்கை, புதிய ஒருமுறை பயன்படுத்தும் விரிப்புகள், மென்மையான துண்டுகள், இயற்கை மூலிகை எண்ணெய்கள் மற்றும் அமைதியான இசை சாதனம்.">
+                                Our therapist brings everything required for a complete 5-star spa experience: a sanitized, sturdy portable folding massage table, fresh disposable bedsheets, headrest covers, sanitized soft towels, cold-pressed organic oils, and a portable Bluetooth speaker for calming spa music.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <span data-en="What space do I need to prepare in my room?" data-ta="எனது அறையில் எவ்வளவு இடம் ஒதுக்க வேண்டும்?">
+                                    What space do I need to prepare in my room?
+                                </span>
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="faqTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" 
+                                 data-en="You only need an open floor area of approximately 6 x 4 feet in your bedroom, guest room, or living room so the therapist can walk comfortably around the massage table. Please ensure the room temperature is comfortable for you."
+                                 data-ta="உங்கள் படுக்கையறை அல்லது ஹாலில் சுமார் 6 x 4 அடி இடம் இருந்தால் போதுமானது. நிபுணர் படுக்கையைச் சுற்றி வசதியாக நிற்க அது உதவும். அறை வெப்பநிலை உங்களுக்கு சௌகரியமாக இருப்பதை உறுதி செய்யவும்.">
+                                You only need an open floor area of approximately 6 x 4 feet in your bedroom, guest room, or living room so the therapist can walk comfortably around the massage table.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <span data-en="Can I select a Male or Female therapist?" data-ta="ஆண் அல்லது பெண் நிபுணரை நான் தேர்வு செய்யலாமா?">
+                                    Can I select a Male or Female therapist?
+                                </span>
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="faqThree" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" 
+                                 data-en="Yes, absolutely! When booking via our website form or WhatsApp, you can explicitly choose your therapist gender preference. Female clients frequently request female certified therapists, and we always ensure complete comfort and privacy."
+                                 data-ta="ஆம், தாராளமாக! முன்பதிவு செய்யும் போது அல்லது வாட்ஸ்அப்பில் உங்கள் விருப்பத்தை தெரிவிக்கலாம். பெண் வாடிக்கையாளர்களுக்கு சான்றளிக்கப்பட்ட பெண் நிபுணர்கள் நியமிக்கப்படுவர்; முழுமையான பாதுகாப்பு உறுதி செய்யப்படும்.">
+                                Yes, absolutely! When booking via our website form or WhatsApp, you can explicitly choose your therapist gender preference.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                <span data-en="How does WhatsApp booking and payment work?" data-ta="வாட்ஸ்அப் முன்பதிவு மற்றும் கட்டணம் செலுத்துதல் எப்படி?">
+                                    How does WhatsApp booking and payment work?
+                                </span>
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="faqFour" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" 
+                                 data-en="When you submit the booking form, a pre-filled WhatsApp message is created with your selected service, address, and slot. Simply click send to chat with our operations team, who immediately confirm your therapist dispatch. Payment can be made after the service via UPI (GPay/PhonePe), Card, or Cash."
+                                 data-ta="முன்பதிவு படிவத்தை பூர்த்தி செய்தவுடன் உங்கள் விவரங்களுடன் கூடிய வாட்ஸ்அப் செய்தி தானாக உருவாகும். அதை அனுப்பினால் எங்கள் குழு உடனடி உறுதிப்படுத்தும். சேவை முடிந்த பிறகு கூகிள்பே, போன்பே அல்லது ரொக்கமாக செலுத்தலாம்.">
+                                When you submit the booking form, a pre-filled WhatsApp message is created with your selected service, address, and slot. Simply click send to chat with our operations team.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INTERACTIVE DOORSTEP BOOKING MODAL -->
+<div class="modal fade" id="doorstepBookingModal" tabindex="-1" aria-labelledby="doorstepBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <div>
+                    <h5 class="modal-title font-serif" id="doorstepBookingModalLabel">
+                        <i class="fa-solid fa-house-chimney-medical me-2"></i>
+                        <span data-en="Book Doorstep Massage Service" data-ta="இல்ல மசாஜ் சேவை முன்பதிவு">Book Doorstep Massage Service</span>
+                    </h5>
+                    <small class="text-white-50" id="modalServiceTitle">Deep Tissue Muscle Relief</small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="doorstepBookingForm">
+                    <div class="row g-3">
+                        <!-- Full Name -->
+                        <div class="col-md-6">
+                            <label class="form-label" data-en="Your Full Name *" data-ta="உங்கள் முழு பெயர் *">Your Full Name *</label>
+                            <input type="text" class="form-control" id="bookCustName" required 
+                                   placeholder="e.g. Ramesh Kumar"
+                                   data-en="e.g. Ramesh Kumar" 
+                                   data-ta="எ.கா. ரமேஷ் குமார்" />
+                        </div>
+
+                        <!-- Phone / WhatsApp Number -->
+                        <div class="col-md-6">
+                            <label class="form-label" data-en="WhatsApp Phone Number *" data-ta="வாட்ஸ்அப் எண் *">WhatsApp Phone Number *</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light fw-bold">+91</span>
+                                <input type="tel" class="form-control" id="bookCustPhone" required 
+                                       placeholder="9876543210" maxlength="10" />
+                            </div>
+                        </div>
+
+                        <!-- Duration Selector -->
+                        <div class="col-md-6">
+                            <label class="form-label" data-en="Select Duration" data-ta="கால அளவு">Select Duration</label>
+                            <select class="form-select" id="modalDurationSelect">
+                                <option value="60" data-price="1799">60 Mins - ₹1,799</option>
+                                <option value="90" data-price="2399">90 Mins - ₹2,399</option>
+                                <option value="120" data-price="3099">120 Mins - ₹3,099</option>
+                            </select>
+                        </div>
+
+                        <!-- Therapist Preference -->
+                        <div class="col-md-6">
+                            <label class="form-label" data-en="Therapist Preference" data-ta="நிபுணர் விருப்பம்">Therapist Preference</label>
+                            <select class="form-select" id="bookTherapistPref">
+                                <option value="Any Certified Professional">Any Certified Professional (ஆண்/பெண்)</option>
+                                <option value="Female Therapist">Female Therapist (பெண் நிபுணர்)</option>
+                                <option value="Male Therapist">Male Therapist (ஆண் நிபுணர்)</option>
+                            </select>
+                        </div>
+
+                        <!-- Preferred Date -->
+                        <div class="col-md-6">
+                            <label class="form-label" data-en="Preferred Date" data-ta="விருப்பமான தேதி">Preferred Date</label>
+                            <input type="date" class="form-control" id="bookCustDate" required />
+                        </div>
+
+                        <!-- Preferred Time Slot -->
+                        <div class="col-md-6">
+                            <label class="form-label" data-en="Preferred Time Slot" data-ta="நேரம்">Preferred Time Slot</label>
+                            <select class="form-select" id="bookCustTime">
+                                <option value="Morning 08:00 AM - 10:00 AM">Morning 08:00 AM - 10:00 AM</option>
+                                <option value="Morning 10:00 AM - 01:00 PM">Morning 10:00 AM - 01:00 PM</option>
+                                <option value="Afternoon 01:00 PM - 04:00 PM">Afternoon 01:00 PM - 04:00 PM</option>
+                                <option value="Evening 04:00 PM - 07:00 PM">Evening 04:00 PM - 07:00 PM</option>
+                                <option value="Night 07:00 PM - 10:00 PM">Night 07:00 PM - 10:00 PM</option>
+                                <option value="Immediate / Next 60 Minutes">Immediate / அடுத்த 60 நிமிடங்களில்</option>
+                            </select>
+                        </div>
+
+                        <!-- Doorstep Delivery Address -->
+                        <div class="col-12">
+                            <label class="form-label" data-en="Doorstep Address (Home / Hotel / Flat) *" data-ta="வீட்டு முகவரி (இல்லம் / ஹோட்டல்) *">
+                                Doorstep Address (Home / Hotel / Flat) *
+                            </label>
+                            <textarea class="form-control" id="bookCustAddress" rows="2" required 
+                                      placeholder="Flat/House No, Building Name, Street, Area, City"
+                                      data-en="Flat/House No, Building Name, Street, Area, City"
+                                      data-ta="கதவு எண், தெரு, பகுதி, நகரம்"></textarea>
+                        </div>
+
+                        <!-- Nearby Landmark -->
+                        <div class="col-md-6">
+                            <label class="form-label" data-en="Nearby Landmark" data-ta="அடையாளம் / லேண்ட்மார்க்">Nearby Landmark</label>
+                            <input type="text" class="form-control" id="bookCustLandmark" 
+                                   placeholder="e.g. Near Metro Station / Apollo Pharmacy"
+                                   data-en="e.g. Near Metro Station / Apollo Pharmacy"
+                                   data-ta="எ.கா. மெட்ரோ நிலையம் அருகில்" />
+                        </div>
+
+                        <!-- Special Notes -->
+                        <div class="col-md-6">
+                            <label class="form-label" data-en="Special Focus / Medical Notes" data-ta="குறிப்பு / குறிப்பிட்ட வலி பகுதிகள்">Special Focus / Medical Notes</label>
+                            <input type="text" class="form-control" id="bookCustNotes" 
+                                   placeholder="e.g. Lower back stiffness, shoulder knot"
+                                   data-en="e.g. Lower back stiffness, shoulder knot"
+                                   data-ta="எ.கா. கீழ் முதுகு வலி, தோள்பட்டை பிடிப்பு" />
+                        </div>
+                    </div>
+
+                    <!-- Price Estimate Box -->
+                    <div class="modal-price-summary-box">
+                        <div>
+                            <small class="text-muted d-block" data-en="Estimated Total (Includes all supplies & taxes)" data-ta="மொத்த கட்டணம் (அனைத்து உபகரணங்களும் அடங்கும்)">
+                                Estimated Total (Includes all supplies & taxes)
+                            </small>
+                            <span class="text-success small">
+                                <i class="fa-solid fa-check-circle me-1"></i>
+                                <span data-en="No advance needed • Pay after massage" data-ta="முன்பணம் தேவையில்லை • மசாஜ் முடிந்த பின் செலுத்தலாம்">
+                                    No advance needed • Pay after massage
+                                </span>
+                            </span>
+                        </div>
+                        <div class="price-tag" id="modalPriceDisplay">₹1,799</div>
+                    </div>
+
+                    <div class="d-grid mt-3">
+                        <button type="submit" class="btn btn-whatsapp-big justify-content-center" id="btnSubmitBooking">
+                            <i class="fa-brands fa-whatsapp fs-5"></i>
+                            <span data-en="Confirm & Send via WhatsApp" data-ta="வாட்ஸ்அப் மூலம் உறுதி செய்க">Confirm & Send via WhatsApp</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
